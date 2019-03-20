@@ -1,0 +1,23 @@
+language: python
+python:
+  - "3.6"
+before_install:
+  - curl -L https://github.com/mmarkdown/mmark/releases/download/v2.0.40/mmark_2.0.40_linux_arm64.tgz -o mmark.tgz
+  - tar xf mmark.tgz
+  - sudo ln -s "$PWD/mmark" /usr/local/bin/mmark
+  - sudo -H pip install xml2rfc
+addons:
+  apt:
+    packages:
+      - python3-lxml
+      - python3-pip
+      - python3-html5lib
+      - html-xml-utils
+jobs:
+  include:
+    - stage: deploy
+      script:
+        - cd "$TRAVIS_BUILD_DIR"
+branches:
+  only:
+    - master
